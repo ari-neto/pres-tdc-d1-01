@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>tdc-d1-01</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h3>Segurança não precisa ser Caixa-Preta</h3>
+					<h5>Sendo data-driven com bot/elastic/grafana</h5>
+					<p><small>
+							Ari Neto - ari_neto@trendmicro.com / ari.oliveira@gmail.com / <a
+								href="https://www.linkedin.com/in/arineto">https://www.linkedin.com/in/arineto</a>
+						</small>
+					</p>
+				</section>
+				
+				<section>
+					<h2>Agenda</h2>
+					<ul>
+						<li class="fragment fade-up">Segurança :(</li>
+						<li class="fragment fade-up">Caixa Preta</li>
+						<li class="fragment fade-up">Monitorando a aplicação</li>
+						<li class="fragment fade-up">Uma opção para quando temos + issues do que poderíamos ter...</li>
+					</ul>
+				</section>
+
+				<section>
+					<div align="center">
+						<img alt="tech_debt" src="img/diagram-value-quadrants-large.png" width="80%" height="80%"
+							style="border:5px solid white">
+					</div>
+					<p>
+						<small>
+							fonte: <a href="https://www.hello2morrow.com/benefits">https://www.hello2morrow.com/benefits</a>
+						</small>
+					</p>
+				</section>
+				
+				<section data-background="img/justice_league.jpg" data-background-size="cover">
+				
+				</section>
+				
+				<section data-background="img/justice_league-dark.jpg" data-background-size="cover">
+					<font color="white">
+						<div align="left">
+							<h3>
+								<font color="white">Como gerenciar isso?</font>
+							</h3>
+							<p>
+							<ul>
+								<li class="fragment fade-up">Saber escolher as ferramentas e plataformas, para poder focar + no produto
+								</li>
+								<li class="fragment fade-up">Colaboração: ninguém sabe tudo e qualquer ideia pode ajudar
+								<li class="fragment fade-up">Aprendizagem: obter conhecimento necessário e saber compartilhá-lo</li>
+								<li class="fragment fade-up">Cultivar uma cultura de engenharia que instigue o uso consciente de novas
+									tecnologias</li>
+								<li class="fragment fade-up">Engajar as pessoas nos objetivos do produto, gerenciando os débitos
+									técnicos</li>
+							</ul>
+							</p>
+						</div>
+					</font>
+				</section>
+
+
+				<section data-background="img/batman_monitoring.jpg" data-background-size="cover">
+				</section>
+
+				<section data-background="img/batman_monitoring-dark.jpg" data-background-size="cover">
+					<font color="white">
+						<p>
+							<b>Observabilidade</b>, na teoria de controle, é uma medida quão bem podem os estados de um
+							sistema ser inferidos a partir do conhecimento de suas saídas externas.
+						</p>
+						<p>
+							<small>
+								fonte: <a
+									href="https://pt.wikipedia.org/wiki/Observabilidade">https://pt.wikipedia.org/wiki/Observabilidade</a>
+							</small>
+						</p>
+					</font>
+				</section>
+
+				<section data-background="img/batman_monitoring-dark.jpg" data-background-size="cover">
+					<h3>SLI - Service Level Indicator</h3>
+					<ul>
+						<li class="fragment fade-up">Metrics over time</li>
+						<ul>
+							<li class="fragment fade-up">Request latency</li>
+							<li class="fragment fade-up">Batch throughput</li>
+							<li class="fragment fade-up">Failures per request</li>
+							<li class="fragment fade-up">99percentile or median</li>
+						</ul>
+						<li class="fragment fade-up">Ex: 95th percentile latency of homepage requests over past 5 minuest
+							less than 300ms</li>
+					</ul>
+				</section>
+				
+				<section data-background="img/batman_monitoring-dark.jpg" data-background-size="cover">
+					<h3>SLO - Service Level Objective</h3>
+					<ul>
+						<li class="fragment fade-up">The amount of time SLI could be out of specification</li>
+						<li class="fragment fade-up">Ex: 95th percentile homepage SLI will succeed 99.9% over trailing year</li>
+						<li class="fragment fade-up">Ex: lower than 1% rate of errors/month</li>
+					</ul>
+				</section>
+				
+				<section data-background="img/batman_monitoring-dark.jpg" data-background-size="cover">
+					<h3>SLA - Service Level Agreement</h3>
+					<ul>
+						<li class="fragment fade-up">Business Agreement - define consequences of failing to deliver services</li>
+						<li class="fragment fade-up">Associated with a SLO</li>
+						<li class="fragment fade-up">Ex: Service credits if 95th percentile homepage SLI succeeds less than 99.5%
+							over trailing year</li>
+					</ul>
+				</section>
+
+				<section data-background="img/batman_monitoring-dark.jpg" data-background-size="cover">
+					<font color="white">
+						<div align="left">
+							<h3>
+								<font color="white">Data Driven:</font>
+							</h3>
+							<ul>
+								<li class="fragment fade-up"><b>Observabilidade:</b> Metrics, Structured Logs, Trace</li>
+								<li class="fragment fade-up"><b>Disponibilidade e Performance:</b> Service Level Indicators(SLIs) /
+									Service Level Objectives (SLOs)</li>
+								<li class="fragment fade-up"><b>Quality Gate:</b> Coverage, Duplicated Lines, Maintainability Rating,
+									Reliability Rating, Security Rating</li>
+							</ul>
+						</div>
+					</font>
+				</section>
+
+				<section data-background="img/batman_monitoring-dark.jpg" data-background-size="cover">
+					<h2>Pontos que medimos...</h2>
+					<ul>
+						<li class="fragment fade-up">Tempo entre de entrega de uma nova release</li>
+						<li class="fragment fade-up">Bugs</li>
+						<li class="fragment fade-up">Backlog de histórias</li>
+						<li class="fragment fade-up">Cobertura de testes</li>
+						<li class="fragment fade-up">Quantidade de requests/latência/disponibilidade</li>
+						<li class="fragment fade-up">...</li>
+					</ul>
+				</section>
+
+				<section data-background="img/security.png" data-background-size="contain" data-background-color="#FFFFFF">
+				</section>
+
+
+				<section data-background="img/batman_monitoring-dark.jpg" data-background-size="cover">
+					<h2>Pontos que podem ser interessantes medir...</h2>
+					<ul>
+						<li class="fragment fade-up">Quantidade de bugs na infra (CVEs)</li>
+						<li class="fragment fade-up">Quantidade de issues de segurança na aplicação</li>
+						<li class="fragment fade-up">Quantidade de eventos de segurança (ataques/auditoria)</li>
+						<li class="fragment fade-up">...</li>
+					</ul>
+				</section>
+
+				<section data-background="img/rusty.jpg" data-background-size="cover">
+				</section>
+
+				<section>
+					<h3>Quando alguém fala de segurança... o que bem na cabeça?</h3>
+				</section>
+				<section data-background="img/capitao_nascimento.jpg" data-background-size="contain">
+				</section>
+				<section data-background="img/secret.jpg" data-background-size="contain">
+				</section>
+
+				<section>
+					<h3>Geralmente não temos acesso ao que as plataformas de segurança estão fazendo...</h3>
+					<p class="fragment fade-up">mas podemos pedir...</p>
+				</section>
+
+				<section data-background="img/dashboards.jpeg" data-background-size="contain">
+				</section>
+
+				<section data-background="img/charlie_brown.jpg" data-background-size="contain">
+				</section>
+
+				<section>
+					<h3>Tem o que usamos no nosso mundo...</h3>
+				</section>
+
+				<section data-background-iframe="img/metrics_host.png" data-background-size="contain">
+					<div
+						style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h3>Metrics</h3>
+					</div>
+				</section>
+				<section data-background-iframe="img/apm_tracing.png" data-background-size="contain">
+					<div
+						style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h3>Tracing</h3>
+					</div>
+				</section>
+				<section data-background-iframe="img/container_01.png" data-background-size="contain">
+					<div
+						style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h3>Container</h3>
+					</div>
+				</section>
+				<section data-background-iframe="img/container_02.png" data-background-size="contain">
+					<div
+						style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h3>Container</h3>
+					</div>
+				</section>
+				<section data-background-iframe="img/antimalware.png" data-background-size="contain">
+					<div
+						style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h3>Antimalware</h3>
+					</div>
+				</section>
+				<section data-background-iframe="img/network_security.png" data-background-size="contain">
+					<div
+						style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h3>Network Security</h3>
+					</div>
+				</section>
+				<section data-background-iframe="img/bot.png" data-background-size="contain">
+					<div
+						style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px; font-size: 20px; text-align: left;">
+						<h3>Bot</h3>
+					</div>
+				</section>
+
+				<section>
+					<h3>Então...</h3>
+					<ul>
+						<li><strong>Dev:</strong> posso ter infos do mundo de segurança integradas ao meu stack</li>
+						<li><strong>Infra:</strong> posso ter infos integradas ao meu stack de monitoração gerenciamento</li>
+						<li><strong>Sec: </strong>posso ter ajuda dos devs para contextualizar o que esta acontecendo do ponto de vista de segurança, que pode estar impactando a aplicação/negócio</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Obrigado!</h2>
+					<p><small>
+							ari_neto@trendmicro.com / ari.oliveira@gmail.com / <a href="https://www.linkedin.com/in/arineto">https://www.linkedin.com/in/arineto</a>
+						</small>
+					</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
